@@ -29,6 +29,11 @@ body{font-family:'Segoe UI',sans-serif;background:#060612;
   border:1px solid rgba(0,255,136,.15);
   color:#00ff88;padding:4px 12px;
   border-radius:20px;font-size:.75em;margin:6px 4px}
+.proj-badge{display:inline-block;
+  background:rgba(189,147,249,.06);
+  border:1px solid rgba(189,147,249,.15);
+  color:#bd93f9;padding:4px 12px;
+  border-radius:20px;font-size:.72em;margin:6px 4px}
 .dot{display:inline-block;width:7px;height:7px;
   border-radius:50%;margin-right:5px;
   animation:bl 1.5s infinite}
@@ -65,12 +70,6 @@ body{font-family:'Segoe UI',sans-serif;background:#060612;
   text-align:center;font-size:.8em;
   color:#ff6b6b;margin:6px 0}
 .ob.show{display:block}
-.sb2{background:rgba(245,166,35,.08);
-  border:1px solid rgba(245,166,35,.2);
-  border-radius:8px;padding:10px 14px;
-  text-align:center;font-size:.82em;
-  color:#f5a623;margin:8px 0;display:none}
-.sb2.show{display:block}
 .gauges{display:flex;justify-content:center;
   gap:20px;margin:15px 0;flex-wrap:wrap}
 .gb{text-align:center;flex:1;min-width:200px;max-width:300px;
@@ -118,7 +117,7 @@ body{font-family:'Segoe UI',sans-serif;background:#060612;
 .cd .vl .sm{font-size:.38em;color:#4a5a7a;font-weight:400}
 .v1{color:#00d2ff}.v2{color:#00ff88}.v3{color:#ff6b6b}
 .v4{color:#f5a623}.v5{color:#bd93f9}.v6{color:#ff79c6}
-.v7{color:#00d2ff}.v8{color:#ff6b6b}
+.v7{color:#00d2ff}
 .td-box{background:rgba(255,50,50,.05);
   border:1px solid rgba(255,50,50,.12);
   border-radius:12px;padding:15px;
@@ -175,9 +174,6 @@ canvas{width:100%!important;height:100%!important}
 .b-g{border-color:rgba(0,255,136,.25);
   background:rgba(0,255,136,.06);color:#00ff88}
 .b-g:hover{background:rgba(0,255,136,.15)}
-.b-y{border-color:rgba(245,166,35,.25);
-  background:rgba(245,166,35,.06);color:#f5a623}
-.b-y:hover{background:rgba(245,166,35,.15)}
 .sp{background:rgba(255,255,255,.02);
   border:1px solid rgba(255,255,255,.05);
   border-radius:12px;padding:16px;
@@ -213,6 +209,12 @@ canvas{width:100%!important;height:100%!important}
 .chip:hover{background:rgba(0,210,255,.15)}
 .chip.active{background:rgba(0,210,255,.2);
   border-color:#00d2ff;font-weight:700}
+.fb-info{background:rgba(189,147,249,.04);
+  border:1px solid rgba(189,147,249,.1);
+  border-radius:8px;padding:10px;
+  font-size:.78em;color:#8892b0;line-height:1.7;
+  margin-bottom:10px}
+.fb-info b{color:#bd93f9}
 .ft{display:flex;flex-wrap:wrap;gap:6px;
   justify-content:center;padding:10px;
   color:#3a4a6a;font-size:.7em;
@@ -258,49 +260,50 @@ canvas{width:100%!important;height:100%!important}
       ⚡ Meter: <span id="meterName">---</span>
     </span>
     <span class="cloud-badge">☁️ Firebase Live</span>
+    <span class="proj-badge">
+      🔥 electricity-theft-global
+    </span>
   </div>
   <div class="cs">
     <div class="ci">
       <span class="dot dot-y" id="dot"></span>
-      <span id="connTxt">Connecting...</span>
+      <span id="connTxt">Connecting to Firebase...</span>
     </div>
     <div class="ci">🕐 <span id="lastUp">--:--:--</span></div>
     <div class="ci">
-      ☁️ <span id="fbTxt" style="color:#f5a623">Connecting</span>
+      ☁️ <span id="fbTxt" style="color:#f5a623">
+        Connecting
+      </span>
     </div>
     <div class="ci">📶 <span id="ping">--</span>ms</div>
   </div>
   <div class="sb">
     12V DC &bull; TX:ACS712-5A &bull;
-    RX:ACS712-30A (Energy Meter) &bull; Firebase RT
+    RX:ACS712-30A (Energy Meter) &bull;
+    asia-southeast1
   </div>
-</div>
-
-<!-- SETUP BAR -->
-<div class="sb2" id="setupBar">
-  ⚙️ Firebase not configured —
-  <b style="cursor:pointer;text-decoration:underline"
-     onclick="openSettings()">Open Settings</b>
-  and enter your Firebase URL
 </div>
 
 <!-- OFFLINE BAR -->
 <div class="ob" id="offBar">
-  ⚠️ Connection lost — retrying...
-  Last data: <span id="offTime">--</span>
+  ⚠️ Firebase connection lost — retrying...
+  Last: <span id="offTime">--</span>
 </div>
 
 <!-- BANNER -->
 <div id="banner" class="banner b-off">
-  ☁️ Connecting to Firebase...
+  ☁️ Connecting to Firebase —
+  electricity-theft-global...
 </div>
 
 <!-- GAUGES -->
 <div class="gauges">
   <div class="gb g-tx">
     <h3>📤 TX Side (Source · 5A)</h3>
-    <div class="gv"><span id="txA">0.00</span>
-      <span class="gu"> A</span></div>
+    <div class="gv">
+      <span id="txA">0.00</span>
+      <span class="gu"> A</span>
+    </div>
     <div style="color:#4a5a7a;font-size:.75em;margin-top:3px">
       <span id="txW">0.0</span> W
     </div>
@@ -311,8 +314,10 @@ canvas{width:100%!important;height:100%!important}
   </div>
   <div class="gb g-df">
     <h3>⚠️ Difference (Loss)</h3>
-    <div class="gv"><span id="dfA">0.00</span>
-      <span class="gu"> A</span></div>
+    <div class="gv">
+      <span id="dfA">0.00</span>
+      <span class="gu"> A</span>
+    </div>
     <div style="color:#4a5a7a;font-size:.75em;margin-top:3px">
       <span id="dfP">0.0</span>% loss
     </div>
@@ -323,8 +328,10 @@ canvas{width:100%!important;height:100%!important}
   </div>
   <div class="gb g-rx">
     <h3>📥 <span id="rxLabel">Energy Meter · 30A</span></h3>
-    <div class="gv"><span id="rxA">0.00</span>
-      <span class="gu"> A</span></div>
+    <div class="gv">
+      <span id="rxA">0.00</span>
+      <span class="gu"> A</span>
+    </div>
     <div style="color:#4a5a7a;font-size:.75em;margin-top:3px">
       <span id="rxW">0.0</span> W
     </div>
@@ -450,55 +457,50 @@ canvas{width:100%!important;height:100%!important}
 <div class="cb">
   <div class="lb">📋 Event Log</div>
   <div class="log" id="logBox">
-    <div class="li2">Dashboard loaded — Connecting...</div>
+    <div class="li2">
+      Connecting to electricity-theft-global...
+    </div>
   </div>
 </div>
 
 <!-- BUTTONS -->
 <div class="bt">
-  <button class="bn"   onclick="toggleSP()">⚙️ Settings</button>
+  <button class="bn"   onclick="toggleSP()">
+    ⚙️ Settings
+  </button>
   <button class="bn"   onclick="tog()">
     <span id="pl">⏸ Pause</span>
   </button>
-  <button class="bn b-g" onclick="refresh()">🔄 Refresh</button>
-  <button class="bn b-r" onclick="clearLog()">🗑️ Clear Log</button>
+  <button class="bn b-g" onclick="refresh()">
+    🔄 Refresh
+  </button>
+  <button class="bn b-r" onclick="clearLog()">
+    🗑️ Clear Log
+  </button>
 </div>
 
 <!-- SETTINGS PANEL -->
 <div id="sp" class="sp">
   <h3>⚙️ Settings</h3>
 
-  <!-- Firebase -->
+  <!-- Firebase Info -->
   <div class="ss">
-    <h4>🔥 Firebase</h4>
-    <div class="sr">
-      <label>Database URL</label>
-      <input type="text" id="fbURL"
-        placeholder="https://xxx-default-rtdb.firebaseio.com">
-    </div>
-    <div class="sr">
-      <label>Secret Key</label>
-      <input type="password" id="fbSecret"
-        placeholder="Your secret key">
-    </div>
-    <div class="sr">
-      <label></label>
-      <button class="bn b-g" onclick="saveFB()"
-              style="width:160px;padding:7px">
-        💾 Save &amp; Connect
-      </button>
-    </div>
-    <div class="sr" style="font-size:.78em">
-      <label>Status</label>
-      <span id="fbSt" style="color:#5a6a8a">
-        Not configured
+    <h4>🔥 Firebase Project</h4>
+    <div class="fb-info">
+      <b>Project:</b> electricity-theft-global<br>
+      <b>Region:</b> asia-southeast1<br>
+      <b>DB URL:</b> electricity-theft-global-default-rtdb
+      .asia-southeast1.firebasedatabase.app<br>
+      <b>Status:</b>
+      <span id="fbTxt2" style="color:#f5a623">
+        Checking...
       </span>
     </div>
   </div>
 
   <!-- Meter -->
   <div class="ss">
-    <h4>⚡ Meter</h4>
+    <h4>⚡ Meter Selection</h4>
     <div class="sr">
       <label>Meter ID</label>
       <input type="text" id="meterID"
@@ -506,8 +508,10 @@ canvas{width:100%!important;height:100%!important}
     </div>
     <div style="padding:6px 0">
       <div style="font-size:.75em;color:#5a6a8a;
-                  margin-bottom:6px">Quick:</div>
-      <div class="chips" id="chips">
+                  margin-bottom:6px">
+        Quick Select:
+      </div>
+      <div class="chips">
         <div class="chip active"
              onclick="qm('METER-001')">METER-001</div>
         <div class="chip"
@@ -531,7 +535,7 @@ canvas{width:100%!important;height:100%!important}
 
   <!-- Alerts -->
   <div class="ss">
-    <h4>🔔 Alerts</h4>
+    <h4>🔔 Alert Settings</h4>
     <div class="sr">
       <label>Theft Threshold (%)</label>
       <input type="number" id="thPct"
@@ -582,6 +586,7 @@ canvas{width:100%!important;height:100%!important}
 
 <!-- FOOTER -->
 <div class="ft">
+  Project:<span>electricity-theft-global</span>&nbsp;|&nbsp;
   TX:<span>ACS712-5A</span>&nbsp;|&nbsp;
   RX:<span>ACS712-30A</span>&nbsp;|&nbsp;
   Meter:<span id="ftM">---</span>&nbsp;|&nbsp;
